@@ -1,7 +1,5 @@
 clear
 
-cd "/Users/Keith/Documents/PUBP 705/Final"
-
 set more off
 set ou e
 
@@ -97,7 +95,5 @@ forv i = 1/5 {
 }
 
 noi est tab lag*, se p
-    est drop lag*
-
 noi est tab chg*, se p
-    est drop chg*
+est drop _all
