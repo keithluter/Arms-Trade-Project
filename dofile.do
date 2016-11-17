@@ -10,8 +10,8 @@ ren v1 strCountry
 
 * FROM STATALIST 199421
 foreach v of var v* {
-	loc x : var l `v'
-	ren `v' yr`x'
+    loc x : var l `v'
+    ren `v' yr`x'
 }
 
 reshape long yr, i(strCountry)
