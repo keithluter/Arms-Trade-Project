@@ -1,7 +1,8 @@
 * SET UP WORKSPACE
 
 clear
-set more off
+set mo off
+set ou e
 
 * IMPORT SIPRI DATA, SAVE AS .DTA
 
