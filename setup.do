@@ -114,7 +114,7 @@ la var ccode "[Panel] Country Code"
 la var intYear "[Time] Year"
 
 la var cinc "[NMC] CINC Score"
-replace cinc = . if cinc == 9
+replace cinc = . if cinc == -9
 
 drop _merge
 
