@@ -23,7 +23,6 @@ ren _j intYear
 
 la var strCountry "Country"
 la var intYear "Year"
-la var dblTIV "[SIPRI] Value of Imports (1990 USD)"
 
 * Delete non-state entities
 drop if substr(strCountry, length(strCountry), 1) == "*"
@@ -33,7 +32,7 @@ replace dblTIV = 0.5 if dblTIV == 0
 replace dblTIV = 0 if mi(dblTIV)
 replace dblTIV = dblTIV / 1000
 
-la var dblTIV "Value of Imports (Thousands of 1990 USD)"
+la var dblTIV "[SIPRI] Value of Imports (Thousands of 1990 USD)"
 
 replace strCountry = "Bosnia" if strCountry == "Bosnia-Herzegovina"
 replace strCountry = "Congo Brazzaville" if strCountry == "Congo"
@@ -110,6 +109,12 @@ replace polity = . if polity < -10
 
 la var polity2 "[POLITY] POLITY2 Score"
 replace polity2 = . if polity2 < -10
+
+la var ccode "[Panel] Country Code"
+la var intYear "[Time] Year"
+
+la var cinc "[NMC] CINC Score"
+replace cinc = . if cinc == 9
 
 drop _merge
 
