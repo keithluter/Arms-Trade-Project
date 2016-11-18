@@ -119,7 +119,7 @@ la var intYear "[Time] Year"
 la var cinc "[NMC] CINC Score"
 replace cinc = . if cinc == -9
 
-drop _merge
+drop _merge version
 
 * PRELIMINARY ANALYSIS
 
