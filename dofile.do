@@ -1,7 +1,9 @@
-clear
+* SET UP WORKSPACE
 
+clear
 set more off
-set ou e
+
+* IMPORT SIPRI DATA, SAVE AS .DTA
 
 import delim "sipri.csv", varn(11) colr(2) enc(ISO-8859-1)
 drop total
@@ -61,7 +63,7 @@ drop if inlist(strCountry, "Unknown country", "Western Sahara")
 
 sa "final.dta", replace
 
-
+* IMPORT POLITY DATASET, MERGE WITH FINAL.DTA, RESAVE
 
 import exc "polity.xls", sh("p4v2015") first clear
 ren country strCountry
@@ -71,12 +73,23 @@ drop if intYear < 1950
 replace strCountry = "Vietnam" if strCountry == "Vietnam North"
 replace strCountry = "Sudan" if strCountry == "Sudan-North"
 
-
-
 mer m:m strCountry intYear using "final.dta"
 drop _merge
 keep if !mi(dblTIV)
 keep if !mi(ccode)
+
+sa "final.dta", replace
+
+* IMPORT NMC-COW DATASET, MERGE WITH FINAL.DTA, RESAVE
+
+insheet using "NMC_v4_0.csv", clear
+ren year intYear
+keep if intYear >= 1950
+mer m:m ccode intYear using "final.dta"
+
+sa "final.dta", replace
+
+* STATISTICAL ANALYSIS
 
 xtset ccode intYear
 
@@ -96,4 +109,6 @@ forv i = 1/5 {
 
 noi est tab lag*, se p
 noi est tab chg*, se p
-est drop _all
+est clear
+
+sa "final.dta", replace
