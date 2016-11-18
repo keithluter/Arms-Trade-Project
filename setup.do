@@ -23,7 +23,7 @@ ren _j intYear
 
 la var strCountry "Country"
 la var intYear "Year"
-la var dblTIV "Value of Imports (1990 USD)"
+la var dblTIV "[SIPRI] Value of Imports (1990 USD)"
 
 * Delete non-state entities
 drop if substr(strCountry, length(strCountry), 1) == "*"
@@ -95,9 +95,25 @@ sa "final.dta", replace
 xtset ccode intYear
 
 g bytTIV = dblTIV > 0
-    la var bytTIV "Importer? (1 = Y)"
+    la var bytTIV "[SIPRI] Importer? (1 = Y)"
 g dblTIV_ln = log(dblTIV)
-    la var dblTIV_ln "Logged TIV"
+    la var dblTIV_ln "[SIPRI] Logged TIV"
+
+la var democ "[POLITY] Democracy Score (1-10)"
+replace democ = . if democ < 0
+
+la var autoc "[POLITY] Autocracy Score (1-10)"
+replace autoc = . if autoc < 0
+
+la var polity "[POLITY] POLITY Score"
+replace polity = . if polity < -10
+
+la var polity2 "[POLITY] POLITY2 Score"
+replace polity2 = . if polity2 < -10
+
+drop _merge
+
+* PRELIMINARY ANALYSIS
 
 forv i = 1/5 {
     g intPOLITY2_lag`i' = F`i'.polity2
