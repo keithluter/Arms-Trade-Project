@@ -103,21 +103,26 @@ g dblTIV_ln = log(dblTIV)
 
 la var democ "[POLITY] Democracy Score (1-10)"
 replace democ = . if democ < 0
+ren democ intDemoc
 
 la var autoc "[POLITY] Autocracy Score (1-10)"
 replace autoc = . if autoc < 0
+ren autoc intAutoc
 
 la var polity "[POLITY] POLITY Score"
 replace polity = . if polity < -10
+ren polity intPOLITY
 
 la var polity2 "[POLITY] POLITY2 Score"
 replace polity2 = . if polity2 < -10
+ren polity2 intPOLITY2
 
 la var ccode "[ID-Panel] Country Code"
 la var intYear "[ID-Time] Year"
 
 la var cinc "[NMC] CINC Score"
 replace cinc = . if cinc == -9
+ren cinc dblCINC
 
 drop _merge version stateabb scode
 
