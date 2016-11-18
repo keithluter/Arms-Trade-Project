@@ -2,7 +2,7 @@
 
 clear
 set mo off
-*set ou e
+set ou e
 
 * IMPORT SIPRI DATA, SAVE AS .DTA
 
