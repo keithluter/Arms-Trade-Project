@@ -120,3 +120,5 @@ la var cinc "[NMC] CINC Score"
 replace cinc = . if cinc == -9
 
 drop _merge version stateabb scode
+
+sa "final.dta", replace
