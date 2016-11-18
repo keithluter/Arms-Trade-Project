@@ -70,6 +70,9 @@ ren country strCountry
 ren year intYear
 drop if intYear < 1950
 
+replace stateabb = "PAK" if stateabb == "PKS"
+replace ccode = 770 if ccode == 769
+
 replace strCountry = "Vietnam" if strCountry == "Vietnam North"
 replace strCountry = "Sudan" if strCountry == "Sudan-North"
 
