@@ -124,6 +124,33 @@ la var cinc "[NMC] CINC Score"
 replace cinc = . if cinc == -9
 ren cinc dblCINC
 
+la var irst "[NMC] Iron and Steel Production (1000s tons)"
+replace irst = . if irst == -9
+ren irst intIrSt
+
+la var milex "[NMC] Military Expenditure (1000s CY USD)"
+replace milex = . if milex == -9
+ren milex intMilEx
+
+la var milper "[NMC] Military Personnel (1000s)"
+replace milper = . if milper == -9
+ren milper intMilPer
+
+la var pec "[NMC] Primary Energy Consumption (1000s coal-ton equivalents)"
+replace pec = . if pec == -9
+ren pec intPEC
+
+la var tpop "[NMC] Total Population (1000s)"
+replace tpop = . if tpop == -9
+ren tpop intTPop
+
+la var upop "[NMC] Urban Population (1000s)"
+replace upop = . if upop == -9
+ren upop intUPop
+
+g dblUrban = 100 * intUPop / intTPop
+la var dblUrban "[NMC-Deriv] Urbanization (%)"
+
 drop _merge version stateabb scode
 
 sa "final.dta", replace
