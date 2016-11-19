@@ -172,6 +172,6 @@ ren pr intPR
 la var cl "[FH] Civil Liberties Score (1-7)"
 ren cl intCL
 
-drop _merge edition inverse* min max
+drop _merge edition inverse* min max sum mean status
 
 sa "final.dta", replace
