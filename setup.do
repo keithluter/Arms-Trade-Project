@@ -32,7 +32,7 @@ replace dblTIV = 0.5 if dblTIV == 0
 replace dblTIV = 0 if mi(dblTIV)
 replace dblTIV = dblTIV / 1000
 
-la var dblTIV "[SIPRI] Value of Imports (Thousands of 1990 USD)"
+la var dblTIV "[SIPRI] Value of Imports (Billions of 1990 USD)"
 
 replace strCountry = "Bosnia" if strCountry == "Bosnia-Herzegovina"
 replace strCountry = "Congo Brazzaville" if strCountry == "Congo"
