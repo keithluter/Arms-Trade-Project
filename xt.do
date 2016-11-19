@@ -1,5 +1,6 @@
 clear
 set mo off
+set ou e
 
 use "final.dta"
 so ccode intYear
@@ -22,7 +23,24 @@ g intPRCL_lag = F.intPRCL
   la var intPRCL_lag "[FH-Deriv] Lagged PR, CL Combined"
   
 xtreg intPOLITY_lag dblTIV, fe
+  est sto POL_raw_fix
 xtreg intPRCL_lag dblTIV, fe
+  est sto FH_raw_fix
+xtreg intPOLITY_lag dblTIV, re
+  est sto POL_raw_rnd
+xtreg intPRCL_lag dblTIV, re
+  est sto FH_raw_rnd
 
 xtreg intPOLITY_lag dblTIV_ln, fe
+  est sto POL_log_fix
 xtreg intPRCL_lag dblTIV_ln, fe
+  est sto FH_log_fix
+xtreg intPOLITY_lag dblTIV_ln, re
+  est sto POL_log_rnd
+xtreg intPRCL_lag dblTIV_ln, re
+  est sto FH_log_rnd
+
+hausman POL_raw_fix POL_raw_rnd
+hausman FH_raw_fix FH_raw_rnd
+hausman POL_log_fix POL_log_rnd
+hausman FH_log_fix FH_log_rnd
