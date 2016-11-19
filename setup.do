@@ -117,9 +117,6 @@ la var polity2 "[POLITY] POLITY2 Score"
 replace polity2 = . if polity2 < -10
 ren polity2 intPOLITY2
 
-la var ccode "[ID-Panel] Country Code"
-la var intYear "[ID-Time] Year"
-
 la var cinc "[NMC] CINC Score"
 replace cinc = . if cinc == -9
 ren cinc dblCINC
@@ -132,7 +129,7 @@ la var milex "[NMC] Military Expenditure (1000s CY USD)"
 replace milex = . if milex == -9
 ren milex intMilEx
 
-la var milper "[NMC] Military Personnel (1000s)"
+la var milper "[NMC] Military Personnel (1000s)"cc
 replace milper = . if milper == -9
 ren milper intMilPer
 
@@ -157,5 +154,24 @@ la var dblMilitarization "[NMC-Deriv] Military Share of Pop. (%)"
 drop _merge version stateabb scode
 
 drop if mi(strCountry)
+
+sa "final.dta", replace
+
+* IMPORT FREEDOM HOUSE DATASET
+
+import exc "fh1972_20161.xlsx", sh("data") first clear
+ren year intYear
+mer m:m ccode intYear using "final.dta"
+
+la var ccode "[ID-Panel] Country Code"
+la var intYear "[ID-Time] Year"
+
+la var pr "[FH] Political Rights Score (1-7)"
+ren pr intPR
+
+la var cl "[FH] Civil Liberties Score (1-7)"
+ren cl intCL
+
+drop _merge edition inverse* min max
 
 sa "final.dta", replace
