@@ -151,6 +151,9 @@ ren upop intUPop
 g dblUrban = 100 * intUPop / intTPop
 la var dblUrban "[NMC-Deriv] Urbanization (%)"
 
+g dblMilitarization = 100 * intMilPer / intTPop
+la var dblMilitarization "[NMC-Deriv] Military Share of Pop. (%)"
+
 drop _merge version stateabb scode
 
 drop if mi(strCountry)
