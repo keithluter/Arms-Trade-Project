@@ -64,6 +64,8 @@ drop if inlist(strCountry, "Unknown country", "Western Sahara")
 
 sa "final.dta", replace
 
+noi di "SIPRI data imported...."
+
 * IMPORT POLITY DATASET, MERGE WITH FINAL.DTA, RESAVE
 
 import exc "polity.xls", sh("p4v2015") first clear
@@ -84,6 +86,8 @@ keep if !mi(ccode)
 
 sa "final.dta", replace
 
+noi di "POLITY data imported...."
+
 * IMPORT NMC-COW DATASET, MERGE WITH FINAL.DTA, RESAVE
 
 insheet using "NMC_v4_0.csv", clear
@@ -94,8 +98,6 @@ mer m:m ccode intYear using "final.dta"
 sa "final.dta", replace
 
 * STATISTICAL ANALYSIS
-
-xtset ccode intYear
 
 g bytTIV = dblTIV > 0
     la var bytTIV "[SIPRI] Importer? (1 = Y)"
@@ -156,6 +158,8 @@ drop _merge version stateabb scode
 
 sa "final.dta", replace
 
+noi di "NMC data imported...."
+
 * IMPORT FREEDOM HOUSE DATASET
 
 import exc "fh1972_20161.xlsx", sh("data") first clear
@@ -178,5 +182,9 @@ drop cyear
 
 la var durable "[POLITY] Regime Durability"
 ren durable intDurable
+
+noi di "Freedom House data imported...."
+
+xtset ccode intYear
 
 sa "final.dta", replace
