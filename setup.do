@@ -129,7 +129,7 @@ la var milex "[NMC] Military Expenditure (1000s CY USD)"
 replace milex = . if milex == -9
 ren milex intMilEx
 
-la var milper "[NMC] Military Personnel (1000s)"cc
+la var milper "[NMC] Military Personnel (1000s)"
 replace milper = . if milper == -9
 ren milper intMilPer
 
