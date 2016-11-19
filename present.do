@@ -17,3 +17,10 @@ su intPOLITY2
 
 hist intPRCL, freq xti(Combined Freedom House Scores (2 = Free)) xlab(2(1)14) yti("")
 su intPRCL
+
+forv i = 1/5 {
+  g intPOLITY2_lag`i' = F`i'.intPOLITY2
+  g intPRCL_lag`i' = F`i'.intPRCL
+  xtreg intPOLITY2_lag`i' dblTIVAutoc dblTIVAnoc dblTIVDemoc, fe
+  xtreg intPRCL_lag`i' dblTIVAutoc dblTIVAnoc dblTIVDemoc, fe
+}
