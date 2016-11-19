@@ -39,7 +39,8 @@ replace strCountry = "Congo Brazzaville" if strCountry == "Congo"
 replace strCountry = "Congo Kinshasa" if strCountry == "DR Congo"
 replace strCountry = "Ivory Coast" if strCountry == "Cote d'Ivoire"
 replace strCountry = "Germany East" if strCountry == "East Germany (GDR)"
-replace strCountry = "Germany West" if strCountry == "Germany (FRG)"
+replace strCountry = "Germany West" if strCountry == "Germany (FRG)" & intYear < 1991
+replace strCountry = "Germany" if strCountry == "Germany (FRG)" & intYear > 1990
 replace strCountry = "Korea North" if strCountry == "North Korea"
 replace strCountry = "Korea South" if strCountry == "South Korea"
 replace strCountry = "Myanmar (Burma)" if strCountry == "Myanmar"
