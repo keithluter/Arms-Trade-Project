@@ -21,7 +21,9 @@ g intPRCL = intPR + intCL
 
 g intPRCL_lag = F.intPRCL
   la var intPRCL_lag "[FH-Deriv] Lagged PR, CL Combined"
-  
+
+reg intPOLITY2 intPRCL
+
 xtreg intPOLITY_lag dblTIV, fe
   est sto POL_raw_fix
 xtreg intPRCL_lag dblTIV, fe
