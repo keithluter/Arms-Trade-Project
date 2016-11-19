@@ -153,4 +153,6 @@ la var dblUrban "[NMC-Deriv] Urbanization (%)"
 
 drop _merge version stateabb scode
 
+drop if mi(strCountry)
+
 sa "final.dta", replace
