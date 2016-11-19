@@ -153,8 +153,6 @@ la var dblMilitarization "[NMC-Deriv] Military Share of Pop. (%)"
 
 drop _merge version stateabb scode
 
-drop if mi(strCountry)
-
 sa "final.dta", replace
 
 * IMPORT FREEDOM HOUSE DATASET
@@ -173,5 +171,11 @@ la var cl "[FH] Civil Liberties Score (1-7)"
 ren cl intCL
 
 drop _merge edition inverse* min max sum mean status
+drop bday bmonth bprec byear
+drop eday emonth eprec eyear
+drop cyear
+
+la var durable "[POLITY] Regime Durability"
+ren durable intDurable
 
 sa "final.dta", replace
