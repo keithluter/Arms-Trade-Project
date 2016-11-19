@@ -6,8 +6,11 @@ so ccode intYear
 
 g bytDemoc = 1 if ordRegime == 3
 recode ordRegime (3 = 1) (nonm = 0) (mis = .), gen(bytDemoc)
+  la var bytDemoc "[POLITY-Deriv] Democracy = 1"
 recode ordRegime (2 = 1) (nonm = 0) (mis = .), gen(bytAnoc)
+  la var byAnoc "[POLITY-Deriv] Anocracy = 1"
 recode ordRegime (1 = 1) (nonm = 0) (mis = .), gen(bytAutoc)
+  la var bytAutoc "[POLITY-Deriv] Autocracy = 1"
 
 g intPOLITY_lag = F.intPOLITY2
   la var intPOLITY_lag "[POLITY-Deriv] Lagged POLITY2 Score"
