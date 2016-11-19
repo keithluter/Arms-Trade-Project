@@ -22,7 +22,11 @@ g intPRCL = intPR + intCL
 g intPRCL_lag = F.intPRCL
   la var intPRCL_lag "[FH-Deriv] Lagged PR, CL Combined"
 
+* Correlation between two DV specifications
+
 reg intPOLITY2 intPRCL
+
+* Time-series regressions
 
 xtreg intPOLITY_lag dblTIV, fe
   est sto POL_raw_fix
@@ -46,3 +50,16 @@ hausman POL_raw_fix POL_raw_rnd
 hausman FH_raw_fix FH_raw_rnd
 hausman POL_log_fix POL_log_rnd
 hausman FH_log_fix FH_log_rnd
+
+* Interaction between regime type and TIV
+
+g dblTIVAutoc = dblTIV * bytAutoc
+g dblTIVAnoc = dblTIV * bytAnoc
+g dblTIVDemoc = dblTIV * bytDemoc
+
+g dblTIVlnAutoc = dblTIV_ln * bytAutoc
+g dblTIVlnAnoc = dblTIV_ln * bytAnoc
+g dblTIVlnDemoc = dblTIV_ln * bytDemoc
+
+xtreg intPOLITY_lag dblTIVlnAutoc dblTIVlnAnoc dblTIVlnDemoc, fe
+xtreg intPOLITY_lag dblTIVAutoc dblTIVAnoc dblTIVDemoc, fe
