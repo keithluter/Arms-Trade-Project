@@ -8,7 +8,7 @@ recode intPOLITY2 (-10/-6 = 1) (-5/5 = 2) (6/10 = 3) (mis = .), gen(ordRegime)
 recode ordRegime (3 = 1) (nonm = 0) (mis = .), gen(bytDemoc)
   la var bytDemoc "[POLITY-Deriv] Democracy = 1"
 recode ordRegime (2 = 1) (nonm = 0) (mis = .), gen(bytAnoc)
-  la var byAnoc "[POLITY-Deriv] Anocracy = 1"
+  la var bytAnoc "[POLITY-Deriv] Anocracy = 1"
 recode ordRegime (1 = 1) (nonm = 0) (mis = .), gen(bytAutoc)
   la var bytAutoc "[POLITY-Deriv] Autocracy = 1"
 
