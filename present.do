@@ -50,3 +50,34 @@ est tab pol_fix_raw*, se p stats(r2_w)
 est tab fh_fix_raw*, se p stats(r2_w)
 est tab pol_fix_ln*, se p stats(r2_w)
 est tab fh_fix_ln*, se p stats(r2_w)
+
+qui forv i = 1/5 {
+  xtreg intPOLITY2_lag`i' dblTIVlnAutoc dblTIVlnAnoc dblTIVlnDemoc L.intPOLITY2, fe
+    est sto pol_fix_ln_`i'
+  xtreg intPOLITY2_lag`i' dblTIVlnAutoc dblTIVlnAnoc dblTIVlnDemoc L.intPOLITY2, re
+    est sto pol_rnd_ln_`i'
+  noi hausman pol_fix_ln_`i' pol_rnd_ln_`i'
+}
+
+est tab pol_fix_ln*, se p stats(r2_w)
+
+recode intYear (1950/1990 = 1) (1991/2016 = 0), gen(bytColdWar)
+
+qui forv i = 1/5 {
+  xtreg intPOLITY2_lag`i' dblTIVlnAutoc dblTIVlnAnoc dblTIVlnDemoc bytColdWar L.intPOLITY2, fe
+    est sto pol_fix_ln_`i'
+  xtreg intPOLITY2_lag`i' dblTIVlnAutoc dblTIVlnAnoc dblTIVlnDemoc bytColdWar L.intPOLITY2, re
+    est sto pol_rnd_ln_`i'
+  noi hausman pol_fix_ln_`i' pol_rnd_ln_`i'
+}
+
+est tab pol_fix_ln*, se p stats(r2_w)
+
+qui forv i = 1/5 {
+  xtreg intPOLITY2_lag`i' dblTIVAutoc dblTIVAnoc dblTIVDemoc bytColdWar L.intPOLITY2, fe
+    est sto pol_fix_raw_`i'
+  xtreg intPOLITY2_lag`i' dblTIVAutoc dblTIVAnoc dblTIVDemoc bytColdWar L.intPOLITY2, re
+    est sto pol_rnd_raw_`i'
+  noi hausman pol_fix_raw_`i' pol_rnd_raw_`i'
+}
+est tab pol_fix_raw*, se p stats(r2_w)
