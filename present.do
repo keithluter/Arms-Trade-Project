@@ -1,83 +1,57 @@
 di "Loading Data...."
-
 do "https://raw.githubusercontent.com/keithluter/Arms-Trade-Project/master/setup.do"
 
 di "Analyzing Data...."
-
 do "https://raw.githubusercontent.com/keithluter/Arms-Trade-Project/master/xt.do"
 
-hist dblTIV, freq xti(Value of Imports (Billions of 1990-Constant USD)) yti("")
-su dblTIV
+set graph off
 
+* SLIDE 2
+hist intPOLITY2, freq xti(POLITY2 Score (-10 = Autocracy, 10 = Democracy)) yti("") bin(21)
+hist intPRCL, freq xla(2(1)14) xti(Freedom House Score (2 = Not Free, 14 = Free)) yti("") bin(13)
+
+* SLIDE 3
+xtreg intPRCL intPOLITY2, fe
+dotplot intPRCL, over(intPOLITY2) xla(-10(2)10) xti("POLITY2 Score") yla(2(2)14) yti("Freedom House Score")
+
+* SLIDE 4
+bys intYear: egen dblPOLITY = mean(intPOLITY2)
+bys intYear: egen dblPRCL = mean(intPRCL)
+la var dblPOLITY "POLITY"
+la var dblPRCL "Freedom House"
+tw (tsline dblPOLITY, xti("") xla(1950(10)2015) yti("Score") lwidth(thick)) (tsline dblPRCL, lwidth(thick) msize(vsmall))
+
+so ccode intYear
+
+* SLIDE 5
+hist dblTIV, freq xti(Value of Imports (Billions of 1990-Constant USD)) yti("Frequency")
 hist dblTIV_ln, freq xti(Logged Value of Imports (Billions of 1990-Constant USD)) yti("")
-su dblTIV_ln
 
-hist intPOLITY2, freq xti(POLITY2 Score (-10 = Autocracy, 10 = Democracy)) yti("")
-su intPOLITY2
+* SLIDE 6
+li intYear ccode strCountry dblTIV in 1/10
 
-hist intPRCL, freq xti(Combined Freedom House Scores (2 = Free)) xlab(2(1)14) yti("")
-su intPRCL
-
-forv i = 1/5 {
-  g intPOLITY2_lag`i' = F`i'.intPOLITY2
-  g intPRCL_lag`i' = F`i'.intPRCL
-  xtreg intPOLITY2_lag`i' dblTIVAutoc dblTIVAnoc dblTIVDemoc, fe
-    est sto pol_fix_raw_`i'
-  xtreg intPOLITY2_lag`i' dblTIVAutoc dblTIVAnoc dblTIVDemoc, re
-    est sto pol_rnd_raw_`i'
-  xtreg intPRCL_lag`i' dblTIVAutoc dblTIVAnoc dblTIVDemoc, fe
-    est sto fh_fix_raw_`i'
-  xtreg intPRCL_lag`i' dblTIVAutoc dblTIVAnoc dblTIVDemoc, re
-    est sto fh_rnd_raw_`i'
-
-  xtreg intPOLITY2_lag`i' dblTIVlnAutoc dblTIVlnAnoc dblTIVlnDemoc, fe
-    est sto pol_fix_ln_`i'
-  xtreg intPOLITY2_lag`i' dblTIVlnAutoc dblTIVlnAnoc dblTIVlnDemoc, re
-    est sto pol_rnd_ln_`i'
-  xtreg intPRCL_lag`i' dblTIVlnAutoc dblTIVlnAnoc dblTIVlnDemoc, fe
-    est sto fh_fix_ln_`i'
-  xtreg intPRCL_lag`i' dblTIVlnAutoc dblTIVlnAnoc dblTIVlnDemoc, re
-    est sto fh_rnd_ln_`i'
-  
-  hausman pol_fix_raw_`i' pol_rnd_raw_`i'
-  hausman fh_fix_raw_`i' fh_rnd_raw_`i'
-  
-  hausman pol_fix_ln_`i' pol_rnd_ln_`i'
-  hausman fh_fix_ln_`i' fh_rnd_ln_`i'
-}
-
-est tab pol_fix_raw*, se p stats(r2_w)
-est tab fh_fix_raw*, se p stats(r2_w)
-est tab pol_fix_ln*, se p stats(r2_w)
-est tab fh_fix_ln*, se p stats(r2_w)
-
-qui forv i = 1/5 {
-  xtreg intPOLITY2_lag`i' dblTIVlnAutoc dblTIVlnAnoc dblTIVlnDemoc L.intPOLITY2, fe
-    est sto pol_fix_ln_`i'
-  xtreg intPOLITY2_lag`i' dblTIVlnAutoc dblTIVlnAnoc dblTIVlnDemoc L.intPOLITY2, re
-    est sto pol_rnd_ln_`i'
-  noi hausman pol_fix_ln_`i' pol_rnd_ln_`i'
-}
-
-est tab pol_fix_ln*, se p stats(r2_w)
-
+* SLIDES 7 AND 8
 recode intYear (1950/1990 = 1) (1991/2016 = 0), gen(bytColdWar)
 
 qui forv i = 1/5 {
-  xtreg intPOLITY2_lag`i' dblTIVlnAutoc dblTIVlnAnoc dblTIVlnDemoc bytColdWar L.intPOLITY2, fe
-    est sto pol_fix_ln_`i'
-  xtreg intPOLITY2_lag`i' dblTIVlnAutoc dblTIVlnAnoc dblTIVlnDemoc bytColdWar L.intPOLITY2, re
-    est sto pol_rnd_ln_`i'
-  noi hausman pol_fix_ln_`i' pol_rnd_ln_`i'
+  g intPOLITY2_lag`i' = F`i'.intPOLITY2
+  xtreg intPOLITY2_lag`i' dblTIVDemoc dblTIVAnoc dblTIVAutoc bytColdWar, fe
+  est sto pol_lag_`i'
 }
-
-est tab pol_fix_ln*, se p stats(r2_w)
+est tab pol_lag*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
 
 qui forv i = 1/5 {
-  xtreg intPOLITY2_lag`i' dblTIVAutoc dblTIVAnoc dblTIVDemoc bytColdWar L.intPOLITY2, fe
-    est sto pol_fix_raw_`i'
-  xtreg intPOLITY2_lag`i' dblTIVAutoc dblTIVAnoc dblTIVDemoc bytColdWar L.intPOLITY2, re
-    est sto pol_rnd_raw_`i'
-  noi hausman pol_fix_raw_`i' pol_rnd_raw_`i'
+  g intPRCL_lag`i' = F`i'.intPRCL
+  xtreg intPRCL_lag`i' dblTIVDemoc dblTIVAnoc dblTIVAutoc bytColdWar, fe
+  est sto prcl_lag`i'
 }
-est tab pol_fix_raw*, se p stats(r2_w)
+est tab prcl_lag*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
+
+* SLIDES 9 AND 10
+g dblMilExChange = 100 * intMilEx / L.intMilEx
+g dblMilExChange_lag = F.dblMilExChange
+g dblMilitarization_lag = F.dblMilitarization
+sem (dblTIV -> dblMilExChange_lag, ) (dblTIV -> dblMilitarization_lag, ) (dblMilExChange_lag -> intPRCL_lag1, ) (bytColdWar -> intPRCL_lag1, ) (dblMilitarization_lag -> intPRCL_lag1, ), nocapslatent
+sem (dblTIV -> dblMilExChange_lag, ) (dblTIV -> dblMilitarization_lag, ) (dblMilExChange_lag -> intPOLITY2_lag1, ) (bytColdWar -> intPOLITY2_lag1, ) (dblMilitarization_lag -> intPOLITY2_lag1, ), nocapslatent
+
+set graph on
