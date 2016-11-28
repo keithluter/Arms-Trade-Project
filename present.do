@@ -55,3 +55,30 @@ sem (dblTIV -> dblMilExChange_lag, ) (dblTIV -> dblMilitarization_lag, ) (dblMil
 sem (dblTIV -> dblMilExChange_lag, ) (dblTIV -> dblMilitarization_lag, ) (dblMilExChange_lag -> intPOLITY2_lag1, ) (bytColdWar -> intPOLITY2_lag1, ) (dblMilitarization_lag -> intPOLITY2_lag1, ), nocapslatent
 
 set graph on
+
+/* ADDITIONAL ANALYSIS
+
+qui forv i = 1/5 {
+  xtreg intPOLITY2_lag`i' dblTIV_ln bytColdWar, fe cluster(ccode)
+  est sto simp`i'
+}
+est tab simp*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
+
+qui forv i = 1/5 {
+  xtreg intPRCL_lag`i' dblTIV_ln bytColdWar, fe cluster(ccode)
+  est sto simp`i'
+}
+est tab simp*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
+
+qui forv i = 1/5 {
+  xtreg intPRCL_lag`i' dblTIVlnAutoc bytColdWar, fe cluster(ccode)
+  est sto aut`i'
+  xtreg intPRCL_lag`i' dblTIVlnAnoc bytColdWar, fe cluster(ccode)
+  est sto ano`i'
+  xtreg intPRCL_lag`i' dblTIVlnDemoc bytColdWar, fe cluster(ccode)
+  est sto dem`i'
+}
+
+est tab aut*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
+est tab ano*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
+est tab dem*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
