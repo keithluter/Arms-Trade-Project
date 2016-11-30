@@ -13,6 +13,10 @@ recode ordRegime (2 = 1) (nonm = 0) (mis = .), gen(bytAnoc)
 recode ordRegime (1 = 1) (nonm = 0) (mis = .), gen(bytAutoc)
   la var bytAutoc "[POLITY-Deriv] Autocracy = 1"
 
+la def lblRegime 1 "Autocracy" 2 "Anocracy" 3 "Democracy"
+la val ordRegime lblRegime
+la var ordRegime "[POLITY-Deriv] Regime Type"
+
 g intPOLITY_lag = F.intPOLITY2
   la var intPOLITY_lag "[POLITY-Deriv] Lagged POLITY2 Score"
 
