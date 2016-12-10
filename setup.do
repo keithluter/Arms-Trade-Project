@@ -192,6 +192,8 @@ bys ccode (scode): replace scode = scode[_N]
 bys ccode (country): replace country = country[_N]
 so ccode intYear
 
+sa "final.dta", replace
+
 * IMPORT AID DATA
 import delim "API_DT.ODA.ALLD.KD_DS2_en_csv_v2.csv", varn(4) enc(ISO-8859-1) clear
 
