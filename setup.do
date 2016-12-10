@@ -187,4 +187,8 @@ noi di "Freedom House data imported...."
 
 xtset ccode intYear
 
+* Fill all missing -scode- values
+bys ccode (scode): replace scode = scode[_N]
+so ccode intYear
+
 sa "final.dta", replace
