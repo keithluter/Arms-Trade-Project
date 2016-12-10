@@ -154,7 +154,7 @@ la var dblUrban "[NMC-Deriv] Urbanization (%)"
 g dblMilitarization = 100 * intMilPer / intTPop
 la var dblMilitarization "[NMC-Deriv] Military Share of Pop. (%)"
 
-drop _merge version stateabb scode
+drop _merge version
 
 sa "final.dta", replace
 
