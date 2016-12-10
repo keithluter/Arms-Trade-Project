@@ -192,7 +192,7 @@ bys ccode (scode): replace scode = scode[_N]
 bys ccode (country): replace country = country[_N]
 so ccode intYear
 
-/* IMPORT AID DATA
+IMPORT AID DATA
 import delim "API_DT.ODA.ALLD.CD_DS2_en_excel_v2.csv", varn(4) enc(ISO-8859-1) clear
 
 foreach v of var v* {
@@ -204,9 +204,119 @@ reshape long yr, i(countrycode)
 ren _j intYear
 ren yr intAid
 ren countrycode scode
+drop ind*
+
+drop if inlist(scode, "ARB", "CEB", "CSS", "EAP", "EAR", "EAS", "ECA", "ECS")
+drop if inlist(scode, "EMU", "EUU", "FCS", "HIC", "HPC", "IBD", "IBT", "IDA")
+drop if inlist(scode, "IDB", "IDX", "INX", "LAC", "LCN", "LDC", "LIC", "LMC")
+drop if inlist(scode, "LMY", "LTE", "MEA", "MIC", "MNA", "OED", "OSS", "PRE")
+drop if inlist(scode, "PSS", "PST", "SAS", "SSA", "SSF", "SST", "TEA", "TEC")
+drop if inlist(scode, "TLA", "TMN", "TSA", "TSS", "UMC", "WLD", "NAC")
+
+replace scode = "AAB" if scode == "ATG"
+replace scode = "ALG" if scode == "DZA"
+replace scode = "ANG" if scode == "AGO"
+replace scode = "UAE" if scode == "ARE"
+replace scode = "AUL" if scode == "AUS"
+replace scode = "AUS" if scode == "AUT"
+replace scode = "BAH" if scode == "BHR"
+replace scode = "BAR" if scode == "BRB"
+replace scode = "BFO" if scode == "BFA"
+replace scode = "BHM" if scode == "BHS"
+replace scode = "BHU" if scode == "BTN"
+replace scode = "BNG" if scode == "BGD"
+replace scode = "BOS" if scode == "BIH"
+replace scode = "BOT" if scode == "BWA"
+replace scode = "BRU" if scode == "BRN"
+replace scode = "BUI" if scode == "BDI"
+replace scode = "BUL" if scode == "BGR"
+replace scode = "CAM" if scode == "KHM"
+replace scode = "CAO" if scode == "CMR"
+replace scode = "CAP" if scode == "CPV"
+replace scode = "CDI" if scode == "CIV"
+replace scode = "CEN" if scode == "CAF"
+replace scode = "CHA" if scode == "TCD"
+replace scode = "CON" if scode == "COG"
+replace scode = "COS" if scode == "CRI"
+replace scode = "CRO" if scode == "HRV"
+replace scode = "CZR" if scode == "CZE"
+replace scode = "DEN" if scode == "DNK"
+replace scode = "DRC" if scode == "COD"
+replace scode = "FIJ" if scode == "FJI"
+replace scode = "FRN" if scode == "FRA"
+replace scode = "GAM" if scode == "GMB"
+replace scode = "GMY" if scode == "DEU"
+replace scode = "GRG" if scode == "GEO"
+replace scode = "GRN" if scode == "GRD"
+replace scode = "GUA" if scode == "GTM"
+replace scode = "GUI" if scode == "GIN"
+replace scode = "HAI" if scode == "HTI"
+replace scode = "HON" if scode == "HND"
+replace scode = "ICE" if scode == "ISL"
+replace scode = "INS" if scode == "IDN"
+replace scode = "IRE" if scode == "IRL"
+replace scode = "KOS" if scode == "KSV"
+replace scode = "KUW" if scode == "KWT"
+replace scode = "KYR" if scode == "KGZ"
+replace scode = "KZK" if scode == "KAZ"
+replace scode = "ROK" if scode == "KOR"
+replace scode = "LES" if scode == "LSO"
+replace scode = "LAT" if scode == "LVA"
+replace scode = "LIB" if scode == "LBY"
+replace scode = "MAA" if scode == "MRT"
+replace scode = "MAC" if scode == "MKD"
+replace scode = "MAD" if scode == "MDV"
+replace scode = "MAG" if scode == "MDG"
+replace scode = "MAL" if scode == "MYS"
+replace scode = "MAS" if scode == "MUS"
+replace scode = "MAW" if scode == "MWI"
+replace scode = "MLD" if scode == "MDA"
+replace scode = "MNC" if scode == "MCO"
+replace scode = "MON" if scode == "MNG"
+replace scode = "MNG" if scode == "MNE"
+replace scode = "MOR" if scode == "MAR"
+replace scode = "MSI" if scode == "MHL"
+replace scode = "MYA" if scode == "MMR"
+replace scode = "MZM" if scode == "MOZ"
+replace scode = "NAU" if scode == "NRU"
+replace scode = "NEP" if scode == "NPL"
+replace scode = "NEW" if scode == "NZL"
+replace scode = "NIG" if scode == "NGA"
+replace scode = "NIR" if scode == "NER"
+replace scode = "NTH" if scode == "NLD"
+replace scode = "OMA" if scode == "OMN"
+replace scode = "PAL" if scode == "PLW"
+replace scode = "PAR" if scode == "PRY"
+replace scode = "PHI" if scode == "PHL"
+replace scode = "POR" if scode == "PRT"
+replace scode = "ROM" if scode == "ROU"
+replace scode = "SAF" if scode == "ZAF"
+replace scode = "SAL" if scode == "SLV"
+replace scode = "SIN" if scode == "SGP"
+replace scode = "SIE" if scode == "SLE"
+replace scode = "SKN" if scode == "KNA"
+replace scode = "SLO" if scode == "SVK"
+replace scode = "SLU" if scode == "LCA"
+replace scode = "SLV" if scode == "SVN"
+replace scode = "SNM" if scode == "SMR"
+replace scode = "SOL" if scode == "SLB"
+replace scode = "SPN" if scode == "ESP"
+replace scode = "SRI" if scode == "LKA"
+replace scode = "SUD" if scode == "SDN"
+replace scode = "SVG" if scode == "VCT"
+replace scode = "SWA" if scode == "SWZ"
+replace scode = "SWD" if scode == "SWE"
+replace scode = "SWZ" if scode == "CHE"
+replace scode = "TAJ" if scode == "TJK"
+replace scode = "TAZ" if scode == "TZA"
+replace scode = "THI" if scode == "THA"
+replace scode = "TOG" if scode == "TGO"
+replace scode = "TRI" if scode == "TTO"
+replace scode = "UKG" if scode == "GBR"
+replace scode = "ZAM" if scode == "ZMB"
+replace scode = "ZIM" if scode == "ZWE"
+
+drop ind*
 
 mer m:m scode intYear using "final.dta"
-
-drop ind* */
-
 sa "final.dta", replace
