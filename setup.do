@@ -316,8 +316,6 @@ replace scode = "UKG" if scode == "GBR"
 replace scode = "ZAM" if scode == "ZMB"
 replace scode = "ZIM" if scode == "ZWE"
 
-drop ind*
-
 mer m:m scode intYear using "final.dta"
 
 noi di "Aid data imported...."
