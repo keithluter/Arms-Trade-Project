@@ -317,7 +317,29 @@ replace scode = "ZAM" if scode == "ZMB"
 replace scode = "ZIM" if scode == "ZWE"
 
 mer m:m scode intYear using "final.dta"
+drop _merge
 
 noi di "Aid data imported...."
+
+sa "final.dta", replace
+
+* Inflation data from http://bit.ly/2h9S13J
+
+import delim "Inflation.csv", clear
+keep year avg
+keep if year <= 2015
+
+g fltInflation = avg / 130.7
+
+ren year intYear
+la var fltInflation "Inflation Index (1990 Base)"
+drop avg
+
+merge 1:m intYear using "final.dta"
+
+noi di "Inflation data imported...."
+
+keep if !mi(ccode)
+so ccode intYear
 
 sa "final.dta", replace
