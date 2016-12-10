@@ -342,4 +342,6 @@ noi di "Inflation data imported...."
 keep if !mi(ccode)
 so ccode intYear
 
+drop if countryname == "Macao SAR, China"
+
 sa "final.dta", replace
