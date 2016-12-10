@@ -189,6 +189,24 @@ xtset ccode intYear
 
 * Fill all missing -scode- values
 bys ccode (scode): replace scode = scode[_N]
+bys ccode (country): replace country = country[_N]
 so ccode intYear
+
+/* IMPORT AID DATA
+import delim "API_DT.ODA.ALLD.CD_DS2_en_excel_v2.csv", varn(4) enc(ISO-8859-1) clear
+
+foreach v of var v* {
+    loc x : var l `v'
+    ren `v' yr`x'
+}
+
+reshape long yr, i(countrycode)
+ren _j intYear
+ren yr intAid
+ren countrycode scode
+
+mer m:m scode intYear using "final.dta"
+
+drop ind* */
 
 sa "final.dta", replace
