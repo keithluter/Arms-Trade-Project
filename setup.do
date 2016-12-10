@@ -193,7 +193,7 @@ bys ccode (country): replace country = country[_N]
 so ccode intYear
 
 * IMPORT AID DATA
-import delim "API_DT.ODA.ALLD.CD_DS2_en_excel_v2.csv", varn(4) enc(ISO-8859-1) clear
+import delim "API_DT.ODA.ALLD.KD_DS2_en_csv_v2.csv", varn(4) enc(ISO-8859-1) clear
 
 foreach v of var v* {
     loc x : var l `v'
@@ -323,7 +323,7 @@ noi di "Aid data imported...."
 
 sa "final.dta", replace
 
-* Inflation data from http://bit.ly/2h9S13J
+/* Inflation data from http://bit.ly/2h9S13J
 
 import delim "Inflation.csv", clear
 keep year avg
@@ -337,7 +337,7 @@ drop avg
 
 merge 1:m intYear using "final.dta"
 
-noi di "Inflation data imported...."
+noi di "Inflation data imported...." */
 
 keep if !mi(ccode)
 so ccode intYear
