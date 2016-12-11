@@ -11,6 +11,9 @@ set graph off
 hist intPOLITY2, freq xti(POLITY2 Score (-10 = Autocracy, 10 = Democracy)) yti("Frequency") bin(21)
 hist intPRCL, freq xla(2(1)14) xti(Freedom House Score (2 = Not Free, 14 = Free)) yti("Frequency") bin(13)
 
+bys intYear: egen dblPOLITY = mean(intPOLITY2)
+bys intYear: egen dblPRCL = mean(intPRCL)
+
 tw (tsline dblPOLITY, xti("") xla(1950(10)2015) yti("Score") lwidth(thick)) (tsline dblPRCL, lwidth(thick) msize(vsmall))
 
 hist dblTIV, freq xti(Value of Imports (Billions of 1990-Constant USD)) yti("Frequency")
