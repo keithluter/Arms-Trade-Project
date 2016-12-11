@@ -12,6 +12,8 @@ bys intYear: egen dblPRCL = mean(intPRCL)
 
 loc prop "b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)"
 
+so ccode intYear
+
   * GRAPHICS 1 THROUGH 3
 
 hist intPOLITY2, freq xti(POLITY2 Score (-10 = Autocracy, 10 = Democracy)) yti("Frequency") bin(21)
