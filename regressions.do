@@ -6,13 +6,16 @@ do "https://raw.githubusercontent.com/keithluter/Arms-Trade-Project/master/xt.do
 
 set graph off
 
+recode intYear (1950/1990 = 1) (1991/2016 = 0), gen(bytColdWar)
+bys intYear: egen dblPOLITY = mean(intPOLITY2)
+bys intYear: egen dblPRCL = mean(intPRCL)
+
+loc prop "b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)"
+
   * GRAPHICS 1 THROUGH 3
 
 hist intPOLITY2, freq xti(POLITY2 Score (-10 = Autocracy, 10 = Democracy)) yti("Frequency") bin(21)
 hist intPRCL, freq xla(2(1)14) xti(Freedom House Score (2 = Not Free, 14 = Free)) yti("Frequency") bin(13)
-
-bys intYear: egen dblPOLITY = mean(intPOLITY2)
-bys intYear: egen dblPRCL = mean(intPRCL)
 
 tw (tsline dblPOLITY, xti("") xla(1950(10)2015) yti("Score") lwidth(thick)) (tsline dblPRCL, lwidth(thick) msize(vsmall))
 
@@ -32,7 +35,7 @@ qui xtreg intPOLITY2 dblTIV bytColdWar, re
 hausman f r
   * p = 0.4587
 
-est tab r*, b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)
+est tab r*, `prop'
 
 qui xtreg intPOLITY2 dblTIV_ln bytColdWar, fe
   est sto f
@@ -41,7 +44,7 @@ qui xtreg intPOLITY2 dblTIV_ln bytColdWar, re
 hausman f r
   * p = 0.0530
 
-est tab r*, b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)
+est tab r*, `prop'
 
 qui xtreg intPRCL dblTIV bytColdWar, fe
   est sto f
@@ -50,7 +53,7 @@ qui xtreg intPRCL dblTIV bytColdWar, re
 hausman f r
   * p = 0.5915
 
-est tab r*, b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)
+est tab r*, `prop'
 
 qui xtreg intPRCL dblTIV_ln bytColdWar, fe
   est sto f
@@ -59,7 +62,7 @@ qui xtreg intPRCL dblTIV_ln bytColdWar, re
 hausman f r
   * p = 0.0530
 
-est tab r*, b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)
+est tab r*, `prop'
 
   * TABLE 3
 
@@ -73,7 +76,7 @@ qui forv i = 1/5 {
   noi hausman f`i' r`i'
 }
 
-est tab r*, b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)
+est tab r*, `prop'
 
   * TABLE 4
 
@@ -87,7 +90,7 @@ qui forv i = 1/5 {
   noi hausman f`i' r`i'
 }
 
-est tab r*, b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)
+est tab r*, `prop'
 
   * TABLE 5
 
@@ -101,7 +104,7 @@ qui forv i = 1/5 {
   noi hausman f`i' r`i'
 }
 
-est tab r*, b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)
+est tab r*, `prop'
 
   * TABLE 6
   
@@ -115,7 +118,7 @@ qui forv i = 1/5 {
   noi hausman f`i' r`i'
 }
 
-est tab f*, b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)
+est tab f*, `prop'
 
   * TABLE 7
 
@@ -128,7 +131,7 @@ qui forv i = 1/5 {
   noi xtoverid
 }
 
-est tab f*, b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)
+est tab f*, `prop'
 
   * TABLE 8
 
@@ -141,7 +144,7 @@ qui forv i = 1/5 {
   noi xtoverid
 }
 
-est tab f*, b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)
+est tab f*, `prop'
 
   * TABLE 9
 
@@ -154,7 +157,7 @@ qui forv i = 1/5 {
   noi xtoverid
 }
 
-est tab f*, b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)
+est tab f*, `prop'
 
   * TABLE 10
 
@@ -167,7 +170,7 @@ qui forv i = 1/5 {
   noi xtoverid
 }
 
-est tab f*, b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)
+est tab f*, `prop'
 
   * TABLE 11
 
@@ -183,7 +186,7 @@ qui forv i = 1/5 {
   noi xtoverid
 }
 
-est tab r*, b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)
+est tab r*, `prop'
 
 qui forv i = 1/5 {
   xtreg F`i'.intPOLITY2 dblTIVfracln* dblTIV_ln bytColdWar, fe
@@ -194,7 +197,7 @@ qui forv i = 1/5 {
   noi xtoverid
 }
 
-est tab f*, b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)
+est tab f*, `prop'
 
 qui forv i = 1/5 {
   xtreg F`i'.intPRCL dblTIVfracln* dblTIV_ln bytColdWar, fe
@@ -205,4 +208,4 @@ qui forv i = 1/5 {
   noi xtoverid
 }
 
-est tab f*, b(%9.2fc) stats(r2_w rho chi2 p F F_f corr) star(.05 .01 .001)
+est tab f*, `prop'
