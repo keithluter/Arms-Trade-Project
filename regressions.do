@@ -189,9 +189,9 @@ qui forv i = 1/5 {
 est tab r*, `prop'
 
 qui forv i = 1/5 {
-  xtreg F`i'.intPOLITY2 dblTIVfracln* dblTIV_ln bytColdWar, fe
+  xtreg F`i'.intPOLITY2 dblTIVfrac_ln* dblTIV_ln bytColdWar, fe
     est sto f`i'
-  xtreg F`i'.intPOLITY2 dblTIVfracln* dblTIV_ln bytColdWar, re
+  xtreg F`i'.intPOLITY2 dblTIVfrac_ln* dblTIV_ln bytColdWar, re
     est sto r`i'
   noi hausman f`i' r`i'
   noi xtoverid
@@ -200,9 +200,9 @@ qui forv i = 1/5 {
 est tab f*, `prop'
 
 qui forv i = 1/5 {
-  xtreg F`i'.intPRCL dblTIVfracln* dblTIV_ln bytColdWar, fe
+  xtreg F`i'.intPRCL dblTIVfrac_ln* dblTIV_ln bytColdWar, fe
     est sto f`i'
-  xtreg F`i'.intPRCL dblTIVfracln* dblTIV_ln bytColdWar, re
+  xtreg F`i'.intPRCL dblTIVfrac_ln* dblTIV_ln bytColdWar, re
     est sto r`i'
   noi hausman f`i' r`i'
   noi xtoverid
