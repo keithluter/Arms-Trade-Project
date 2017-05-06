@@ -13,6 +13,9 @@ sa regs.dta, replace
 loc title "Effect Size of Logged Imports on Democratization (One-Year Lag)"
 hist alpha, bin(50) freq xti(`title') addplot(pci 0 -0.27 80 -0.27) legend(off)
 
+keep if p < 0.05
+hist alpha, bin(10) freq xti(`title') addplot(pci 0 -0.27 10 -0.27) legend(off)
+
 use diss.dta, clear
 
 local cases 840 812 652 155 230 800 93 91
