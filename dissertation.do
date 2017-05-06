@@ -10,7 +10,7 @@ g p = 2*ttail(df,abs(t))
 export delimited using "regs.csv", replace
 sa regs.dta, replace
 
-loc title "Distribution of Effect Size of Logged Imports on Democratization (One-Year Lag)"
+loc title "Effect Size of Logged Imports on Democratization (One-Year Lag)"
 hist alpha, bin(50) freq xti(`title') addplot(pci 0 -0.27 80 -0.27) legend(off)
 
 use diss.dta, clear
