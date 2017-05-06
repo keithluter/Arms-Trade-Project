@@ -4,7 +4,7 @@ do "https://raw.githubusercontent.com/keithluter/Arms-Trade-Project/master/prese
 sa diss.dta, replace
 
 * http://www.statalist.org/forums/forum/general-stata-discussion/general/72259-t-stat-and-p-values
-statsby alpha=_b[dblTIV_ln] se=_se[dblTIV_ln] df=e(df_r), sa(regs.dta, replace) by(ccode): xtreg intPOLITY2_lag1 dblTIV_ln bytColdWar, fe
+statsby alpha=_b[dblTIV_ln] se=_se[dblTIV_ln] df=e(df_r), by(ccode): xtreg intPOLITY2_lag1 dblTIV_ln bytColdWar, fe
 g t = alpha/se
 g p = 2*ttail(df,abs(t))
 export delimited using "regs.csv", replace
