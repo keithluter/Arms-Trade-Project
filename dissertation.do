@@ -14,3 +14,13 @@ so _b_dblTIV_ln
 export delimited using "regs.csv", replace
 
 use diss.dta, clear
+
+local cases 840 812 652 155 230 800 93 91
+
+qui foreach x of local cases{
+  forv i = 1/5 {
+    xtreg intPOLITY2_lag`i' dblTIV_ln bytColdWar if ccode == `x', fe
+    est sto pol_lag_`x'_`i'
+  }
+  noi est tab pol_lag_`x'_*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
+}
