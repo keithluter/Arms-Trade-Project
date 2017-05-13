@@ -18,6 +18,14 @@ hist alpha, bin(10) freq xti(`title') addplot(pci 0 -0.27 10 -0.27) legend(off)
 
 use diss.dta, clear
 
+forv i = 1 / 5 {
+  qui xtreg intPOLITY2_lag`i' dblTIV_ln bytColdWar, fe
+  est sto f`i'
+  qui xtreg intPOLITY2_lag`i' dblTIV_ln bytColdWar, re
+  est sto r`i'
+  hausman f`i' r`i'
+}
+
 local cases 840 812 652 155 230 800 93 91
 
 qui foreach x of local cases{
