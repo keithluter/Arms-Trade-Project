@@ -26,6 +26,8 @@ forv i = 1 / 5 {
   hausman f`i' r`i'
 }
 
+est tab r*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
+
 local cases 840 812 652 155 230 800 93 91
 
 qui foreach x of local cases{
