@@ -20,14 +20,14 @@ hist alpha, bin(10) freq xti(`title') addplot(pci 0 -0.27 10 -0.27) legend(off)
 use diss.dta, clear
 
 forv i = 1 / 5 {
-  qui xtreg intPOLITY2_lag`i' dblTIV_ln bytColdWar, fe
+  qui xtreg intPOLITY2_lag`i' dblTIV_ln dblGDP bytColdWar, fe
   est sto f`i'
-  qui xtreg intPOLITY2_lag`i' dblTIV_ln bytColdWar, re
+  qui xtreg intPOLITY2_lag`i' dblTIV_ln dblGDP bytColdWar, re
   est sto r`i'
   hausman f`i' r`i'
 }
 
-est tab r*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
+est tab f*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
 
 local neg 790 840 551 663
 
