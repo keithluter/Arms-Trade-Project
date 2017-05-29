@@ -29,9 +29,19 @@ forv i = 1 / 5 {
 
 est tab r*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
 
-local cases 790 840 551 663
+local neg 790 840 551 663
 
-qui foreach x of local cases{
+qui foreach x of local neg {
+  forv i = 1/5 {
+    xtreg intPOLITY2_lag`i' dblTIV_ln dblGDP bytColdWar if ccode == `x', fe
+    est sto pol_lag_`x'_`i'
+  }
+  noi est tab pol_lag_`x'_*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
+}
+
+local pos 433 630 93 800
+
+qui foreach x of local pos {
   forv i = 1/5 {
     xtreg intPOLITY2_lag`i' dblTIV_ln dblGDP bytColdWar if ccode == `x', fe
     est sto pol_lag_`x'_`i'
