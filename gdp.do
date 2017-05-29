@@ -20,7 +20,6 @@ replace scode = "BRU" if scode == "BRN"
 replace scode = "BHU" if scode == "BTN"
 replace scode = "BOT" if scode == "BWA"
 replace scode = "CEN" if scode == "CAF"
-replace scode = "SWZ" if scode == "CHE"
 replace scode = "IVO" if scode == "CIV"
 replace scode = "CAO" if scode == "CMR"
 replace scode = "CON" if scode == "COG"
@@ -94,6 +93,7 @@ replace scode = "SLO" if scode == "SVK"
 replace scode = "SLV" if scode == "SVN"
 replace scode = "SWD" if scode == "SWE"
 replace scode = "SWA" if scode == "SWZ"
+replace scode = "SWZ" if scode == "CHE"
 replace scode = "SEY" if scode == "SYC"
 replace scode = "CHA" if scode == "TCD"
 replace scode = "TOG" if scode == "TGO"
@@ -111,6 +111,9 @@ replace scode = "SAF" if scode == "ZAF"
 replace scode = "ZAM" if scode == "ZMB"
 replace scode = "ZIM" if scode == "ZWE"
 
+drop if countryname == "Macao SAR, China"
+replace scode = "MNG" if countryname == "Montenegro"
+
 drop if inlist(scode, "ARB", "CEB", "CSS", "DEU", "EAP")
 drop if inlist(scode, "EAR", "EAS", "ECA", "ECS", "EMU")
 drop if inlist(scode, "EUU", "FCS", "HIC", "HPC", "IBD")
@@ -121,6 +124,5 @@ drop if inlist(scode, "NAC", "OED", "OSS", "PRE", "PSS")
 drop if inlist(scode, "PST", "SAS", "OSS", "SUD", "SSA")
 drop if inlist(scode, "SSF", "SST", "TEA", "TEC", "TLA")
 drop if inlist(scode, "TMN", "TSA", "TSS", "UMC", "WLD")
-' Dropped DEU and SUD
 
 sa "gdp.dta", replace
