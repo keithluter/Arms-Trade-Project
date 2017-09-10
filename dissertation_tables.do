@@ -42,3 +42,28 @@ qui{
 
   restore
 }
+
+*** 800 (Thailand), 666 (Israel), 840 (Philippines), and 790 (Nepal) show up in both lists
+*** with coefficients of opposite magnitudes.
+
+loc cases 800 666 840 790
+
+*** One- to five-year POLITY regressions for each case 
+
+qui foreach x of local cases {
+  forv i = 1/5 {
+    xtreg intPOLITY2_lag`i' dblTIV_ln dblMaddison_ln bytColdWar if ccode == `x', fe
+    est sto pol_lag_`x'_`i'
+  }
+  noi est tab pol_lag_`x'_*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
+}
+
+*** One- to five-year POLITY regressions for each case 
+
+qui foreach x of local cases {
+  forv i = 1/5 {
+    xtreg intPRCL_lag`i' dblTIV_ln dblMaddison_ln bytColdWar if ccode == `x', fe
+    est sto prcl_lag_`x'_`i'
+  }
+  noi est tab prcl_lag_`x'_*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
+}
