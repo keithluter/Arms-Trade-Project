@@ -8,6 +8,8 @@ qui forv i = 1 / 5 {
   hausman f`i' r`i'
 }
 
+*** TABLE OF GLOBAL AVERAGES, POLITY AGAINST LOGGED IMPORTS,
+*** LOGGED GDP, AND COLD WAR DUMMY
 est tab f*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
 
 qui forv i = 1 / 5 {
@@ -18,6 +20,8 @@ qui forv i = 1 / 5 {
   hausman f`i' r`i'
 }
 
+*** TABLE OF GLOBAL AVERAGES, FH AGAINST LOGGED IMPORTS,
+*** LOGGED GDP, AND COLD WAR DUMMY
 est tab f*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
 
 preserve
@@ -67,3 +71,20 @@ qui foreach x of local cases {
   }
   noi est tab prcl_lag_`x'_*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
 }
+
+*** GRAPHICS
+tssmooth ma fh=intPRCL, window(4 1 0)
+tssmooth ma tiv=dblTIV_ln, window(4 1 0)
+tssmooth ma pol=intPOLITY2, window(4 1 0)
+
+la var fh "Freedom House"
+la var tiv "Logged Arms Imports"
+la var pol "POLITY"
+
+twoway (tsline fh, lcolor(midgreen) lwidth(0.6)) (tsline pol, lcolor(blue) lwidth(0.6)) (tsline tiv, lcolor(red) lwidth(0.6)) if ccode == 800, tscale(off) title(Thailand) legend(on rows(3) position(9) ring(0))
+
+twoway (tsline fh, lcolor(midgreen) lwidth(0.6)) (tsline pol, lcolor(blue) lwidth(0.6)) (tsline tiv, lcolor(red) lwidth(0.6)) if ccode == 666, tscale(off) title(Israel) legend(on rows(3) position(9) ring(0))
+
+twoway (tsline fh, lcolor(midgreen) lwidth(0.6)) (tsline pol, lcolor(blue) lwidth(0.6)) (tsline tiv, lcolor(red) lwidth(0.6)) if ccode == 840, tscale(off) title(Philippines) legend(on rows(3) position(9) ring(0))
+
+twoway (tsline fh, lcolor(midgreen) lwidth(0.6)) (tsline pol, lcolor(blue) lwidth(0.6)) (tsline tiv, lcolor(red) lwidth(0.6)) if ccode == 790, tscale(off) title(Nepal) legend(on rows(3) position(9) ring(0))
