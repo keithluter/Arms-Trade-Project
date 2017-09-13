@@ -74,7 +74,7 @@ qui foreach x of local cases {
   noi est tab pol_lag_`x'_*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
 }
 
-*** One- to five-year POLITY regressions for each case 
+*** One- to five-year Freedom House regressions for each case 
 
 qui foreach x of local cases {
   forv i = 1/5 {
