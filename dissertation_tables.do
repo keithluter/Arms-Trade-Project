@@ -29,11 +29,12 @@ est tab f*, b(%9.2fc) stats(r2_w) star(.05 .01 .001)
 *** SIGNIFICANT
 
 xtologit ordRegime dblTIV_ln dblMaddison_ln bytColdWar, or
-xtologit L.ordRegime dblTIV_ln dblMaddison_ln bytColdWar, or
+xtologit F1.ordRegime dblTIV_ln dblMaddison_ln bytColdWar, or
+xtologit F5.ordRegime dblTIV_ln dblMaddison_ln bytColdWar, or
 
 recode intPRCL (2/5 = 3) (6/10 = 2) (11/14 = 1), generate(ordFH)
-xtologit L.ordFH dblTIV_ln dblMaddison_ln bytColdWar, or
-xtologit ordFH dblTIV_ln dblMaddison_ln bytColdWar, or
+xtologit F1.ordFH dblTIV_ln dblMaddison_ln bytColdWar, or
+xtologit F5.ordFH dblTIV_ln dblMaddison_ln bytColdWar, or
 
 preserve
 
