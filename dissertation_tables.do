@@ -36,15 +36,15 @@ recode intPRCL (2/5 = 3) (6/10 = 2) (11/14 = 1), generate(ordFH)
 xtologit F1.ordFH dblTIV_ln dblMaddison_ln bytColdWar, or
 xtologit F5.ordFH dblTIV_ln dblMaddison_ln bytColdWar, or
 
-preserve
-
 qui{
+  preserve
+
   statsby alpha=_b[dblTIV_ln] se=_se[dblTIV_ln] df=e(df_r), by(ccode) clear: xtreg intPOLITY2_lag1 dblTIV_ln bytColdWar dblMaddison_ln, fe
   g t = alpha/se
   g p = 2*ttail(df,abs(t))
   keep if p < 0.05
   so alpha
-  sa regs_polity.dta, replace
+  sa regs_polity1.dta, replace
 
   restore
   preserve
@@ -54,13 +54,33 @@ qui{
   g p = 2*ttail(df,abs(t))
   keep if p < 0.05
   so alpha
-  sa regs_prcl.dta, replace
+  sa regs_prcl.dta1, replace
+
+  restore
+  preserve
+  
+  statsby alpha=_b[dblTIV_ln] se=_se[dblTIV_ln] df=e(df_r), by(ccode) clear: xtreg intPOLITY2_lag3 dblTIV_ln bytColdWar dblMaddison_ln, fe
+  g t = alpha/se
+  g p = 2*ttail(df,abs(t))
+  keep if p < 0.05
+  so alpha
+  sa regs_polity1.dta, replace
+
+  restore
+  preserve
+
+  statsby alpha=_b[dblTIV_ln] se=_se[dblTIV_ln] df=e(df_r), by(ccode) clear: xtreg intPRCL_lag3 dblTIV_ln bytColdWar dblMaddison_ln, fe
+  g t = alpha/se
+  g p = 2*ttail(df,abs(t))
+  keep if p < 0.05
+  so alpha
+  sa regs_prcl.dta1, replace
 
   restore
 }
 
 *** 800 (Thailand), 666 (Israel), 840 (Philippines), and 790 (Nepal) show up in both lists
-*** with coefficients of opposite magnitudes.
+*** with one-year coefficients of opposite magnitudes.
 
 loc cases 800 666 840 790
 
