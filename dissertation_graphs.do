@@ -19,8 +19,4 @@ reshape long alpha se df t p, i(ccode)
 keep if p < 0.05
 keep if !mi(p)
 
-g case = 0
-replace case = 1 if inlist(ccode,663,155,800,145)
-replace case = -1 if inlist(ccode,775,432,145,771)
-
 graph box alpha, over(ccode, sort(1) label(angle(vertical))) nofill
