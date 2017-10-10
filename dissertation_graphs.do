@@ -20,6 +20,7 @@ keep if p < 0.05
 keep if !mi(p)
 
 g case = 0
-replace case = 1 if inlist(ccode,145,771,663,155,145,800,432,775,93)
+replace case = 1 if inlist(ccode,663,155,800,145)
+replace case = -1 if inlist(ccode,775,432,145,771)
 
 graph box alpha, over(ccode, sort(1) label(angle(vertical))) nofill
