@@ -25,3 +25,14 @@ twoway (tsline mavg_tiv mavg_pol) if ccode == 790, ylabel(#2) ttitle("") tlabel(
 set graphics on
 
 gr combine Bolivia.gph Jordan.gph Bangladesh.gph Chile.gph Thailand.gph Philippines.gph Israel.gph Nepal.gph, rows(4) cols(2) graphregion(margin(zero))
+
+
+egen tiv = std(dblTIV)
+egen tivln = std(dblTIV_ln)
+egen gdp = std(dblMaddison)
+egen gdpln = std(dblMaddison_ln)
+la var tiv "Arms Imports (z-score)"
+la var tivln "Logged Arms Imports (z-score)"
+la var gdp "GDP p.c. (z-score)"
+la var gdpln "Logged GDP p.c. (z-score)"
+graph hbox tiv tivln gdp gdpln, ylabel(none) legend(span) ti("Effects of Logging on Outliers")
